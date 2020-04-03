@@ -1,0 +1,7 @@
+# Useful aliases with Alpine Linux.
+
+alias psall='ps -o user,group,comm,pid,ppid,pgid,etime,nice,rgroup,ruser,time,tty,vsz,sid,stat,rss,args'
+
+alias ll='ls -laF'
+alias h='history'
+alias pywhat='python --version; python -m site'

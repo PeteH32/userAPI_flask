@@ -1,0 +1,10 @@
+
+# Python venv
+.venv
+
+# Python intermediate files
+__pycache__
+
+# VS Code
+.vscode
+

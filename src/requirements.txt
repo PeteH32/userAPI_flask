@@ -1,0 +1,6 @@
+flask
+flask_rest_jsonapi
+flask_sqlalchemy
+gunicorn
+marshmallow_jsonapi
+sqlalchemy
