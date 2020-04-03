@@ -1,12 +1,15 @@
 # UserAPI - A rest resource for users and exams, implemented in Python/Flask
 
 - [UserAPI - A rest resource for users and exams, implemented in Python/Flask](#userapi---a-rest-resource-for-users-and-exams--implemented-in-python-flask)
+  * [Description](#description)
   * [Prerequisites](#prerequisites)
   * [Build and run](#build-and-run)
   * [The Rest API](#the-rest-api)
     + [Format: JSON:API specification](#format--json-api-specification)
     + [Security](#security)
     + [API Endpoints](#api-endpoints)
+      - [Background](#background)
+      - [API Documentation](#api-documentation)
   * [Automated tests](#automated-tests)
   * [Cleanup](#cleanup)
 
@@ -58,6 +61,8 @@ WARNING:
 
 ### API Endpoints
 
+#### Background
+
 The UserAPI service's container is mapped to port 5000 on your local OSX.
 
 In addition to the "users" endpoint, I also added an "exams" endpoint to demonstrate relationships in JSON:API.
@@ -67,11 +72,11 @@ In addition to the "users" endpoint, I also added an "exams" endpoint to demonst
 - Exams endpoint
   - `curl http://127.0.0.1:5000/exams`
 
-### API Documentation
+#### API Documentation
 
 I generated API doc here:
 
-- https://github.com/PeteH32/userAPI_flask/BrightMD_API.mhtml
+- https://github.com/PeteH32/userAPI_flask/blob/master/BrightMD_API.mhtml
 
 ## Automated tests
 
