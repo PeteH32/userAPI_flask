@@ -1,6 +1,9 @@
 FROM python:3.7-alpine
 
-# First, only do dependencies, so they're in their own docker layer. This is so when we make code changes,
+# Need these in order to install Python dependency "psycopg2" which needs built from source code.
+RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev
+
+# First, only do dependencies, so they're in their own docker cache layer. This is so when we make code changes,
 # the "docker build" will not need to redo "pip install" (you'll see "Using cache" for that step).
 COPY src/requirements.txt /myapp/
 RUN pip install -U pip

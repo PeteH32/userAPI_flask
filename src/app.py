@@ -12,7 +12,8 @@ app.config['DEBUG'] = True
 
 
 # Initialize SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://localuser:localpassword@db/user_api_db'
 db = SQLAlchemy(app)
 
 '''
@@ -21,7 +22,7 @@ NOTE: This is based directly on the tutorial from flask-rest-jsonapi:
 '''
 
 # Create data storage
-class User(db.Model):
+class Bmduser(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     email = db.Column(db.String)
@@ -32,26 +33,28 @@ class User(db.Model):
 class Exam(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     serial = db.Column(db.String)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship('User', backref=db.backref('exams'))
+    bmduser_id = db.Column(db.Integer, db.ForeignKey('bmduser.id'))
+    bmduser = db.relationship('Bmduser', backref=db.backref('exams'))
 
 db.create_all()
 
 
 # Create logical data abstraction (same as data storage for this first example)
-class UserSchema(Schema):
+class BmduserSchema(Schema):
     class Meta:
-        type_ = 'user'
-        self_view = 'user_detail'
+        type_ = 'bmduser'
+        self_view = 'bmduser_detail'
         self_view_kwargs = {'id': '<id>'}
-        self_view_many = 'user_list'
+        self_view_many = 'bmduser_list'
 
     id = fields.Integer(as_string=True, dump_only=True)
-    name = fields.Str(required=True, load_only=True)
+    name = fields.Str(required=True)
     email = fields.Email(load_only=True)
     birth_date = fields.Date()
-    display_name = fields.Function(lambda obj: "{} <{}>".format(obj.name.upper(), obj.email))
-    exams = Relationship(self_view='user_exams',
+    # Change "password" to this to make it read-only (won't be exposed in GET responses).
+    # password = fields.Str(required=True, load_only=True)
+    password = fields.Str(required=True)
+    exams = Relationship(self_view='bmduser_exams',
                              self_view_kwargs={'id': '<id>'},
                              related_view='exam_list',
                              related_view_kwargs={'id': '<id>'},
@@ -68,23 +71,24 @@ class ExamSchema(Schema):
 
     id = fields.Integer(as_string=True, dump_only=True)
     serial = fields.Str(required=True)
-    owner = Relationship(attribute='user',
-                         self_view='exam_user',
+    bmduser_id = fields.Integer(required=True)
+    owner = Relationship(attribute='bmduser',
+                         self_view='exam_bmduser',
                          self_view_kwargs={'id': '<id>'},
-                         related_view='user_detail',
+                         related_view='bmduser_detail',
                          related_view_kwargs={'exam_id': '<id>'},
-                         schema='UserSchema',
-                         type_='user')
+                         schema='BmduserSchema',
+                         type_='bmduser')
 
 
 # Create resource managers
-class UserList(ResourceList):
-    schema = UserSchema
+class BmduserList(ResourceList):
+    schema = BmduserSchema
     data_layer = {'session': db.session,
-                  'model': User}
+                  'model': Bmduser}
 
 
-class UserDetail(ResourceDetail):
+class BmduserDetail(ResourceDetail):
     def before_get_object(self, view_kwargs):
         if view_kwargs.get('exam_id') is not None:
             try:
@@ -93,21 +97,21 @@ class UserDetail(ResourceDetail):
                 raise ObjectNotFound({'parameter': 'exam_id'},
                                      "Exam: {} not found".format(view_kwargs['exam_id']))
             else:
-                if exam.user is not None:
-                    view_kwargs['id'] = exam.user.id
+                if exam.bmduser is not None:
+                    view_kwargs['id'] = exam.bmduser.id
                 else:
                     view_kwargs['id'] = None
 
-    schema = UserSchema
+    schema = BmduserSchema
     data_layer = {'session': db.session,
-                  'model': User,
+                  'model': Bmduser,
                   'methods': {'before_get_object': before_get_object}}
 
 
-class UserRelationship(ResourceRelationship):
-    schema = UserSchema
+class BmduserRelationship(ResourceRelationship):
+    schema = BmduserSchema
     data_layer = {'session': db.session,
-                  'model': User}
+                  'model': Bmduser}
 
 
 class ExamList(ResourceList):
@@ -115,17 +119,17 @@ class ExamList(ResourceList):
         query_ = self.session.query(Exam)
         if view_kwargs.get('id') is not None:
             try:
-                self.session.query(User).filter_by(id=view_kwargs['id']).one()
+                self.session.query(Bmduser).filter_by(id=view_kwargs['id']).one()
             except NoResultFound:
-                raise ObjectNotFound({'parameter': 'id'}, "User: {} not found".format(view_kwargs['id']))
+                raise ObjectNotFound({'parameter': 'id'}, "Bmduser: {} not found".format(view_kwargs['id']))
             else:
-                query_ = query_.join(User).filter(User.id == view_kwargs['id'])
+                query_ = query_.join(Bmduser).filter(Bmduser.id == view_kwargs['id'])
         return query_
 
     def before_create_object(self, data, view_kwargs):
         if view_kwargs.get('id') is not None:
-            user = self.session.query(User).filter_by(id=view_kwargs['id']).one()
-            data['user_id'] = user.id
+            bmduser = self.session.query(Bmduser).filter_by(id=view_kwargs['id']).one()
+            data['bmduser_id'] = bmduser.id
 
     schema = ExamSchema
     data_layer = {'session': db.session,
@@ -148,12 +152,12 @@ class ExamRelationship(ResourceRelationship):
 
 # Create endpoints
 api = Api(app)
-api.route(UserList, 'user_list', '/users')
-api.route(UserDetail, 'user_detail', '/users/<int:id>', '/exams/<int:exam_id>/owner')
-api.route(UserRelationship, 'user_exams', '/users/<int:id>/relationships/exams')
-api.route(ExamList, 'exam_list', '/exams', '/users/<int:id>/exams')
+api.route(BmduserList, 'bmduser_list', '/bmdusers')
+api.route(BmduserDetail, 'bmduser_detail', '/bmdusers/<int:id>', '/exams/<int:exam_id>/owner')
+api.route(BmduserRelationship, 'bmduser_exams', '/bmdusers/<int:id>/relationships/exams')
+api.route(ExamList, 'exam_list', '/exams', '/bmdusers/<int:id>/exams')
 api.route(ExamDetail, 'exam_detail', '/exams/<int:id>')
-api.route(ExamRelationship, 'exam_user', '/exams/<int:id>/relationships/owner')
+api.route(ExamRelationship, 'exam_bmduser', '/exams/<int:id>/relationships/owner')
 
 if __name__ == '__main__':
     # Start application

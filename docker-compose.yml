@@ -1,9 +1,26 @@
 version: "3.7"
 
+volumes:
+    user-api-data:
+
 services:
 
     restapp:
         build: ./
         image: user_api_flask
         ports:
-            - "5000:5000"
+            - "5000:5000"       # From your host, can connect to the restapp on this port (the left port number is HostPort)
+        depends_on:
+            - db
+
+    db:
+        image: postgres
+        restart: always
+        ports:
+            - "54321:5432"      # From your host, can connect to the db on this port (the left port number is HostPort)
+        environment:
+            POSTGRES_DB: user_api_db
+            POSTGRES_USER: localuser
+            POSTGRES_PASSWORD: localpassword
+        volumes:
+            - user-api-data:/var/lib/postgresql/data/ # persist data even if container shuts down
