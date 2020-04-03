@@ -2,10 +2,10 @@
 
 ## Prerequisites
 
-This is what I tested on. Everything runs inside a Docker container, so you do not need to have Python3 
+Everything runs inside a Docker container, so you do not need to have Python3 
 or pip on your OSX machine. You just need Docker.
 
-- Mac OSX
+- Mac OSX. That's what I tested on, but should also work on Windows 10 and Linux.
 - Install Docker and Docker-Compose
 
 ## Build and run
@@ -36,9 +36,21 @@ To cleanup all docker images, containers, etc:
 
 ## The Rest API
 
+### Rest format using JSON:API specification
+
+This Rest API fully implements the JSON:API specification (v1.0);
+
+- https://jsonapi.org/format
+
+### Security
+
+WARNING: Currently there is no authentication.
+
+### API Endpoints
+
 The service's container is mapped to port 5000 on your local OSX.
 
-NOTE: Currently there is no authentication.
+In addition to the "users" endpoint, I also added an "exams" endpoint to demonstrate relationships.
 
 - Users endpoint
   - `curl http://127.0.0.1:5000/users`
