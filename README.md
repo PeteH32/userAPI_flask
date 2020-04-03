@@ -7,6 +7,7 @@
     + [Format: JSON:API specification](#format--json-api-specification)
     + [Security](#security)
     + [API Endpoints](#api-endpoints)
+  * [Automated tests](#automated-tests)
   * [Cleanup](#cleanup)
 
 ## Prerequisites
@@ -20,11 +21,9 @@ or pip on your OSX machine. You just need Docker.
 ## Build and run
 
 - Build and run the service:
-  - NOTE: Must manually start the postgres db before starting the restapp.
-    - `docker-compose up -d db`
-    - `docker-compose up -d restapp`
+  - `make up`
 - Shutdown service:
-  - `docker-compose down`
+  - `make down`
 - Re-build after making code changes:
   - `docker-compose build`
   - NOTE: I have not yet mounted the "src" folder, which would then allow code changes to be picked up live, without rebuilding/restarting.
@@ -61,12 +60,27 @@ In addition to the "users" endpoint, I also added an "exams" endpoint to demonst
 - Exams endpoint
   - `curl http://127.0.0.1:5000/exams`
 
+## Automated tests
+
+Although this is a full JSON:API rest client backed by a Postgres database, there is almost no business-logic in this 
+code to write unit tests against. So instead, I created Rest API tests using Postman and Newman.
+
+To run the automated API tests:
+
+- Make sure restapp and db are running:
+  - `make up`
+- Run the API tests:
+  - `make runtests`
+  - In the test output, all API calls should return success:
+    - "200 OK"
+    - "201 CREATED"
+- Newman has ability to provide assertions and verify that each API call is returning expected values, including 
+expected errors. But I do not know how to write Newman assertions/checks. This is just the groundwork for those tests.
+
 ## Cleanup
 
 To cleanup all docker images, containers, etc:
 
-- `docker-compose down`
+- `make down`
+- `make delete_db`
 - `docker image rm user_api_flask`
-- WARNING: This next step is will remove ALL unused images from your machine, not just the ones from this project. It is optional.
-  - `docker image prune -f`
-- `docker volume rm userapi_flask_user-api-data`

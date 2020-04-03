@@ -8,3 +8,5 @@ __pycache__
 # VS Code
 .vscode
 
+# Postman Newman test reports
+tests/postman_collections/newman-report.json

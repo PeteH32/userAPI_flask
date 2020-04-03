@@ -1,0 +1,299 @@
+{
+	"info": {
+		"_postman_id": "43848482-6f9d-49f1-a61a-5773195dec2a",
+		"name": "Bright.MD API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/bmdusers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BMD_URL}}/bmdusers",
+					"host": [
+						"{{BMD_URL}}"
+					],
+					"path": [
+						"bmdusers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/bmdusers",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"type\": \"bmduser\",\n        \"attributes\": {\n            \"first_name\": \"Alice\",\n            \"last_name\": \"Zimmerman\",\n            \"zip_code\": \"90210\",\n            \"email_address\": \"a.z@asd.com\"\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BMD_URL}}/bmdusers",
+					"host": [
+						"{{BMD_URL}}"
+					],
+					"path": [
+						"bmdusers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/bmdusers 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"type\": \"bmduser\",\n        \"attributes\": {\n            \"first_name\": \"Bob\",\n            \"last_name\": \"Yoder\",\n            \"zip_code\": \"15321\",\n            \"email_address\": \"b.y@asd.com\"\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BMD_URL}}/bmdusers",
+					"host": [
+						"{{BMD_URL}}"
+					],
+					"path": [
+						"bmdusers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/bmdusers/<id>",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BMD_URL}}/bmdusers/2",
+					"host": [
+						"{{BMD_URL}}"
+					],
+					"path": [
+						"bmdusers",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/exams",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BMD_URL}}/exams",
+					"host": [
+						"{{BMD_URL}}"
+					],
+					"path": [
+						"exams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/exams",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"type\": \"exam\",\n        \"attributes\": {\n            \"exam_date\": \"2020-03-31\",\n            \"notes\": \"Conducted at users home.\",\n            \"bmduser_id\": 2\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BMD_URL}}/exams",
+					"host": [
+						"{{BMD_URL}}"
+					],
+					"path": [
+						"exams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/exams 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"type\": \"exam\",\n        \"attributes\": {\n            \"exam_date\": \"2020-03-23\",\n            \"notes\": \"Practice exam for training on staff member.\",\n            \"bmduser_id\": 1\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BMD_URL}}/exams",
+					"host": [
+						"{{BMD_URL}}"
+					],
+					"path": [
+						"exams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/exams 3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"type\": \"exam\",\n        \"attributes\": {\n            \"exam_date\": \"2020-04-3\",\n            \"notes\": \"Conducted in clinic.\",\n            \"bmduser_id\": 2\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BMD_URL}}/exams",
+					"host": [
+						"{{BMD_URL}}"
+					],
+					"path": [
+						"exams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/exams/1/patient",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BMD_URL}}/exams/1/patient",
+					"host": [
+						"{{BMD_URL}}"
+					],
+					"path": [
+						"exams",
+						"1",
+						"patient"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/exams/<id>",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BMD_URL}}/exams/1",
+					"host": [
+						"{{BMD_URL}}"
+					],
+					"path": [
+						"exams",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/exams/1/relationships/patient",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BMD_URL}}/exams/1/relationships/patient",
+					"host": [
+						"{{BMD_URL}}"
+					],
+					"path": [
+						"exams",
+						"1",
+						"relationships",
+						"patient"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/bmdusers/1/relationships/exams",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BMD_URL}}/bmdusers/1/relationships/exams",
+					"host": [
+						"{{BMD_URL}}"
+					],
+					"path": [
+						"bmdusers",
+						"1",
+						"relationships",
+						"exams"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "adf26889-7490-43bf-9dba-334f33297bc5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2f9784b4-224d-4521-8180-338a37ff8e12",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "66a7dc38-e67c-40a5-862e-866cffe45bc1",
+			"key": "BMD_URL",
+			"value": "http://userapi_flask_restapp_1:5000",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
