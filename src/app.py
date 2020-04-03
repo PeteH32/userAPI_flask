@@ -24,15 +24,16 @@ NOTE: This is based directly on the tutorial from flask-rest-jsonapi:
 # Create data storage
 class Bmduser(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    email = db.Column(db.String)
-    birth_date = db.Column(db.Date)
-    password = db.Column(db.String)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
+    email_address = db.Column(db.String)
+    zip_code = db.Column(db.String)
 
 
 class Exam(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    serial = db.Column(db.String)
+    exam_date = db.Column(db.Date)
+    notes = db.Column(db.String)
     bmduser_id = db.Column(db.Integer, db.ForeignKey('bmduser.id'))
     bmduser = db.relationship('Bmduser', backref=db.backref('exams'))
 
@@ -48,12 +49,12 @@ class BmduserSchema(Schema):
         self_view_many = 'bmduser_list'
 
     id = fields.Integer(as_string=True, dump_only=True)
-    name = fields.Str(required=True)
-    email = fields.Email(load_only=True)
-    birth_date = fields.Date()
-    # Change "password" to this to make it read-only (won't be exposed in GET responses).
-    # password = fields.Str(required=True, load_only=True)
-    password = fields.Str(required=True)
+    first_name = fields.Str(required=True)
+    last_name = fields.Str(required=True)
+    # Change "email_address" to this to make it read-only (won't be exposed in GET responses).
+    # email_address = fields.Email(required=True, load_only=True)
+    email_address = fields.Email(required=True)
+    zip_code = fields.Str(required=True)
     exams = Relationship(self_view='bmduser_exams',
                              self_view_kwargs={'id': '<id>'},
                              related_view='exam_list',
@@ -70,9 +71,10 @@ class ExamSchema(Schema):
         self_view_kwargs = {'id': '<id>'}
 
     id = fields.Integer(as_string=True, dump_only=True)
-    serial = fields.Str(required=True)
+    exam_date = fields.Date()
+    notes = fields.Str(required=True)
     bmduser_id = fields.Integer(required=True)
-    owner = Relationship(attribute='bmduser',
+    patient = Relationship(attribute='bmduser',
                          self_view='exam_bmduser',
                          self_view_kwargs={'id': '<id>'},
                          related_view='bmduser_detail',
@@ -153,11 +155,11 @@ class ExamRelationship(ResourceRelationship):
 # Create endpoints
 api = Api(app)
 api.route(BmduserList, 'bmduser_list', '/bmdusers')
-api.route(BmduserDetail, 'bmduser_detail', '/bmdusers/<int:id>', '/exams/<int:exam_id>/owner')
+api.route(BmduserDetail, 'bmduser_detail', '/bmdusers/<int:id>', '/exams/<int:exam_id>/patient')
 api.route(BmduserRelationship, 'bmduser_exams', '/bmdusers/<int:id>/relationships/exams')
 api.route(ExamList, 'exam_list', '/exams', '/bmdusers/<int:id>/exams')
 api.route(ExamDetail, 'exam_detail', '/exams/<int:id>')
-api.route(ExamRelationship, 'exam_bmduser', '/exams/<int:id>/relationships/owner')
+api.route(ExamRelationship, 'exam_bmduser', '/exams/<int:id>/relationships/patient')
 
 if __name__ == '__main__':
     # Start application

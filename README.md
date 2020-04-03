@@ -14,7 +14,7 @@
 Everything runs inside a Docker container, so you do not need to have Python3 
 or pip on your OSX machine. You just need Docker.
 
-- Mac OSX. That's what I tested on, but should also work on Windows 10 and Linux.
+- Mac OSX is what I tested on, but should also work on Windows 10 and Linux.
 - Install Docker and Docker-Compose
 
 ## Build and run
@@ -67,6 +67,6 @@ To cleanup all docker images, containers, etc:
 
 - `docker-compose down`
 - `docker image rm user_api_flask`
-- WARNING: This next step is will remove ALL unused images from your machine, not just the ones form this project. It is optional.
+- WARNING: This next step is will remove ALL unused images from your machine, not just the ones from this project. It is optional.
   - `docker image prune -f`
 - `docker volume rm userapi_flask_user-api-data`
