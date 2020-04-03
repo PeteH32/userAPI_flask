@@ -10,6 +10,13 @@
   * [Automated tests](#automated-tests)
   * [Cleanup](#cleanup)
 
+## Description
+
+A full JSON:API rest client, backed by a Postgres database. Implements following two API endpoints:
+
+- `/bmdusers` - Users
+- `/exams` - I added Exams so can show relationships. A user can have many exams.
+
 ## Prerequisites
 
 Everything runs inside a Docker container, so you do not need to have Python3 
@@ -56,9 +63,15 @@ The UserAPI service's container is mapped to port 5000 on your local OSX.
 In addition to the "users" endpoint, I also added an "exams" endpoint to demonstrate relationships in JSON:API.
 
 - Users endpoint
-  - `curl http://127.0.0.1:5000/users`
+  - `curl http://127.0.0.1:5000/bmdusers`
 - Exams endpoint
   - `curl http://127.0.0.1:5000/exams`
+
+### API Documentation
+
+I generated API doc here:
+
+- https://github.com/PeteH32/userAPI_flask/BrightMD_API.mhtml
 
 ## Automated tests
 
