@@ -1,7 +1,7 @@
 
 up:
 	docker-compose up -d db
-	# Note: Cannot let "restapp" try to connect to "db" before the db has it's port open and ready. So doing a hack-y sleep.
+	# Note: Pausing to let "db" get it's port open, before we start "restapp". This is the hacky way to do it.
 	sleep 3
 	docker-compose up -d restapp
 

@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm.exc import NoResultFound
 from marshmallow_jsonapi.flask import Schema, Relationship
 from marshmallow_jsonapi import fields
+from request_logging import init_logging
 
 # Create the Flask application
 app = Flask(__name__)
@@ -15,13 +16,26 @@ app.config['DEBUG'] = True
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://localuser:localpassword@db/user_api_db'
 db = SQLAlchemy(app)
+init_logging(app)
 
 '''
 NOTE: This is based directly on the tutorial from flask-rest-jsonapi:
     https://flask-rest-jsonapi.readthedocs.io/en/latest/quickstart.html
 '''
 
-# Create data storage
+################################################################################
+#
+#   For explanation of the below 3 layers, see flask-rest-jsonapi docs here:
+#       https://flask-rest-jsonapi.readthedocs.io/en/latest/index.html
+#
+#   DATABASE LAYER  <==  DATA ABSTRACTION LAYER  <==  REST API LAYER
+#
+################################################################################
+
+
+################################################################################
+# DATABASE LAYER
+################################################################################
 class Bmduser(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String)
@@ -40,7 +54,9 @@ class Exam(db.Model):
 db.create_all()
 
 
-# Create logical data abstraction (same as data storage for this first example)
+################################################################################
+# DATA ABSTRACTION LAYER
+################################################################################
 class BmduserSchema(Schema):
     class Meta:
         type_ = 'bmduser'
@@ -83,7 +99,9 @@ class ExamSchema(Schema):
                          type_='bmduser')
 
 
-# Create resource managers
+################################################################################
+# REST API LAYER
+################################################################################
 class BmduserList(ResourceList):
     schema = BmduserSchema
     data_layer = {'session': db.session,

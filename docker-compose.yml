@@ -8,6 +8,8 @@ services:
     restapp:
         build: ./
         image: user_api_flask
+        # volumes: 
+        #     - ./src:/myapp
         ports:
             - "5000:5000"       # From your host, can connect to the restapp on this port (the left port number is HostPort)
         depends_on:
