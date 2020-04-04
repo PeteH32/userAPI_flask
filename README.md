@@ -77,6 +77,7 @@ In addition to the "users" endpoint, I also added an "exams" endpoint to demonst
 I generated API doc here:
 
 - https://github.com/PeteH32/userAPI_flask/blob/master/BrightMD_API.mhtml
+- Note: DELETE's work per JSON:API spec. But I forgot to include in the above doc.
 
 ## Automated tests
 
@@ -92,6 +93,7 @@ To run the automated API tests:
   - In the test output, all API calls should return success:
     - "200 OK"
     - "201 CREATED"
+- Note: DELETE's work per JSON:API spec. But I forgot to include in the automated test script. Can be easily added.
 - Newman has ability to provide assertions and verify that each API call is returning expected values, including 
 expected errors. But I do not know how to write Newman assertions/checks. This is just the groundwork for those tests.
 
