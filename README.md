@@ -3,14 +3,15 @@
 - [UserAPI - A rest resource for users and exams, implemented in Python/Flask](#userapi---a-rest-resource-for-users-and-exams--implemented-in-python-flask)
   * [Description](#description)
   * [Prerequisites](#prerequisites)
-  * [Build and run](#build-and-run)
+  * [Build And Run](#build-and-run)
+  * [The Database (postgres)](#the-database--postgres-)
   * [The Rest API](#the-rest-api)
     + [Format: JSON:API specification](#format--json-api-specification)
     + [Security](#security)
     + [API Endpoints](#api-endpoints)
       - [Background](#background)
       - [API Documentation](#api-documentation)
-  * [Automated tests](#automated-tests)
+  * [Automated Tests](#automated-tests)
   * [Cleanup](#cleanup)
 
 ## Description
@@ -46,6 +47,23 @@ or pip on your OSX machine. You just need Docker.
   - `docker logs -tf userapi_flask_restapp_1`
 - To "ssh" into the running service (not really ssh):
   - `docker exec -it userapi_flask_restapp_1 sh -l`
+
+## The Database (postgres)
+
+The database is Postgres running in a docker container. I use PSequel to view the data:
+
+- http://www.psequel.com/
+
+Here is the db connection info:
+
+- In file "src/app.py", this setting:
+  - app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://XXXX:YYYY@db/user_api_db'
+    - Host: 127.0.0.1
+    - Port: 54321
+    - User: localuser
+    - Password: localpassword
+    - Database: user_api_db
+    - Use SSL: off/unchecked
 
 ## The Rest API
 
