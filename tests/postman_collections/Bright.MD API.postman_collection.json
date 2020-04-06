@@ -6,30 +6,30 @@
 	},
 	"item": [
 		{
-			"name": "/bmdusers",
+			"name": "/users",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{BMD_URL}}/bmdusers",
+					"raw": "{{BMD_URL}}/users",
 					"host": [
 						"{{BMD_URL}}"
 					],
 					"path": [
-						"bmdusers"
+						"users"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "/bmdusers",
+			"name": "/users",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"data\": {\n        \"type\": \"bmduser\",\n        \"attributes\": {\n            \"first_name\": \"Alice\",\n            \"last_name\": \"Zimmerman\",\n            \"zip_code\": \"90210\",\n            \"email_address\": \"a.z@asd.com\"\n        }\n    }\n}",
+					"raw": "{\n    \"data\": {\n        \"type\": \"user\",\n        \"attributes\": {\n            \"first_name\": \"Alice\",\n            \"last_name\": \"Zimmerman\",\n            \"zip_code\": \"90210\",\n            \"email_address\": \"a.z@asd.com\"\n        }\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -37,25 +37,25 @@
 					}
 				},
 				"url": {
-					"raw": "{{BMD_URL}}/bmdusers",
+					"raw": "{{BMD_URL}}/users",
 					"host": [
 						"{{BMD_URL}}"
 					],
 					"path": [
-						"bmdusers"
+						"users"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "/bmdusers 2",
+			"name": "/users 2",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"data\": {\n        \"type\": \"bmduser\",\n        \"attributes\": {\n            \"first_name\": \"Bob\",\n            \"last_name\": \"Yoder\",\n            \"zip_code\": \"15321\",\n            \"email_address\": \"b.y@asd.com\"\n        }\n    }\n}",
+					"raw": "{\n    \"data\": {\n        \"type\": \"user\",\n        \"attributes\": {\n            \"first_name\": \"Bob\",\n            \"last_name\": \"Yoder\",\n            \"zip_code\": \"15321\",\n            \"email_address\": \"b.y@asd.com\"\n        }\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -63,29 +63,73 @@
 					}
 				},
 				"url": {
-					"raw": "{{BMD_URL}}/bmdusers",
+					"raw": "{{BMD_URL}}/users",
 					"host": [
 						"{{BMD_URL}}"
 					],
 					"path": [
-						"bmdusers"
+						"users"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "/bmdusers/<id>",
+			"name": "/users 3",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"type\": \"user\",\n        \"attributes\": {\n            \"first_name\": \"Cindy\",\n            \"last_name\": \"Xalier\",\n            \"zip_code\": \"97004\",\n            \"email_address\": \"c.x@asd.com\"\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{BMD_URL}}/bmdusers/2",
+					"raw": "{{BMD_URL}}/users",
 					"host": [
 						"{{BMD_URL}}"
 					],
 					"path": [
-						"bmdusers",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/users/<id>",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BMD_URL}}/users/3",
+					"host": [
+						"{{BMD_URL}}"
+					],
+					"path": [
+						"users",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/users/<id>",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BMD_URL}}/users/2",
+					"host": [
+						"{{BMD_URL}}"
+					],
+					"path": [
+						"users",
 						"2"
 					]
 				}
@@ -116,7 +160,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"data\": {\n        \"type\": \"exam\",\n        \"attributes\": {\n            \"exam_date\": \"2020-03-31\",\n            \"notes\": \"Conducted at users home.\",\n            \"bmduser_id\": 2\n        }\n    }\n}",
+					"raw": "{\n    \"data\": {\n        \"type\": \"exam\",\n        \"attributes\": {\n            \"exam_date\": \"2020-03-31\",\n            \"notes\": \"Conducted at users home.\",\n            \"user_id\": 2\n        }\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -142,7 +186,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"data\": {\n        \"type\": \"exam\",\n        \"attributes\": {\n            \"exam_date\": \"2020-03-23\",\n            \"notes\": \"Practice exam for training on staff member.\",\n            \"bmduser_id\": 1\n        }\n    }\n}",
+					"raw": "{\n    \"data\": {\n        \"type\": \"exam\",\n        \"attributes\": {\n            \"exam_date\": \"2020-03-23\",\n            \"notes\": \"Practice exam for training on staff member.\",\n            \"user_id\": 1\n        }\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -168,7 +212,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"data\": {\n        \"type\": \"exam\",\n        \"attributes\": {\n            \"exam_date\": \"2020-04-3\",\n            \"notes\": \"Conducted in clinic.\",\n            \"bmduser_id\": 2\n        }\n    }\n}",
+					"raw": "{\n    \"data\": {\n        \"type\": \"exam\",\n        \"attributes\": {\n            \"exam_date\": \"2020-04-3\",\n            \"notes\": \"Conducted in clinic.\",\n            \"user_id\": 2\n        }\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -182,6 +226,50 @@
 					],
 					"path": [
 						"exams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/exams 4",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"type\": \"exam\",\n        \"attributes\": {\n            \"exam_date\": \"2020-04-3\",\n            \"notes\": \"Might get cancelled before we start.\",\n            \"user_id\": 1\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BMD_URL}}/exams",
+					"host": [
+						"{{BMD_URL}}"
+					],
+					"path": [
+						"exams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/exams/<id>",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BMD_URL}}/exams/4",
+					"host": [
+						"{{BMD_URL}}"
+					],
+					"path": [
+						"exams",
+						"4"
 					]
 				}
 			},
@@ -245,17 +333,17 @@
 			"response": []
 		},
 		{
-			"name": "/bmdusers/1/relationships/exams",
+			"name": "/users/1/relationships/exams",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{BMD_URL}}/bmdusers/1/relationships/exams",
+					"raw": "{{BMD_URL}}/users/1/relationships/exams",
 					"host": [
 						"{{BMD_URL}}"
 					],
 					"path": [
-						"bmdusers",
+						"users",
 						"1",
 						"relationships",
 						"exams"
@@ -289,7 +377,7 @@
 	],
 	"variable": [
 		{
-			"id": "66a7dc38-e67c-40a5-862e-866cffe45bc1",
+			"id": "116bce9b-b290-41fe-b219-d319b2922b05",
 			"key": "BMD_URL",
 			"value": "http://userapi_flask_restapp_1:5000",
 			"type": "string"
