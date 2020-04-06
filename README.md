@@ -17,8 +17,8 @@
 
 A full JSON:API rest client, backed by a Postgres database. Implements following two API endpoints:
 
-- `/bmdusers` - Users
-- `/exams` - I added Exams so can show relationships. A user can have many exams.
+- `/users` - Users
+- `/exams` - Exams, added so can show relationships. A "user" can have many "exams".
 
 ## Prerequisites
 
@@ -28,12 +28,14 @@ or pip on your OSX machine. You just need Docker.
 - Mac OSX is what I tested on, but should also work on Windows 10 and Linux.
 - Install Docker and Docker-Compose
 
-## Build and run
+## Build And Run
 
 - Build and run the service:
   - `make up`
 - Shutdown service:
   - `make down`
+- Run automated tests
+  - See below section "Automated Tests"
 - Re-build after making code changes:
   - `docker-compose build`
   - NOTE: I have not yet mounted the "src" folder, which would then allow code changes to be picked up live, without rebuilding/restarting.
@@ -68,7 +70,7 @@ The UserAPI service's container is mapped to port 5000 on your local OSX.
 In addition to the "users" endpoint, I also added an "exams" endpoint to demonstrate relationships in JSON:API.
 
 - Users endpoint
-  - `curl http://127.0.0.1:5000/bmdusers`
+  - `curl http://127.0.0.1:5000/users`
 - Exams endpoint
   - `curl http://127.0.0.1:5000/exams`
 
@@ -76,31 +78,29 @@ In addition to the "users" endpoint, I also added an "exams" endpoint to demonst
 
 I generated API doc here:
 
-- https://github.com/PeteH32/userAPI_flask/blob/master/BrightMD_API.mhtml
-- Note: DELETE's work per JSON:API spec. But I forgot to include in the above doc.
+- Note: All CRUD operations work per JSON:API spec (v1.0): https://jsonapi.org/format
+- Note: It's best to directly open this web page in Chrome
+  - ./docs/Bright.MD_API.html
 
-## Automated tests
+## Automated Tests
 
 Although this is a full JSON:API rest client backed by a Postgres database, there is almost no business-logic in this 
-code to write unit tests against. So instead, I created Rest API tests using Postman and Newman.
+codebase (it's basically a simple I/O app). In this scenario I think that, instead of unit tests, it's more effective to use Rest API tests. I used Postman and Newman to create these tests.
 
 To run the automated API tests:
 
-- Make sure restapp and db are running:
-  - `make up`
+- Recommended to start with fresh (empty) database
+  - `make delete_db`
 - Run the API tests:
   - `make runtests`
   - In the test output, all API calls should return success:
     - "200 OK"
     - "201 CREATED"
-- Note: DELETE's work per JSON:API spec. But I forgot to include in the automated test script. Can be easily added.
 - Newman has ability to provide assertions and verify that each API call is returning expected values, including 
-expected errors. But I do not know how to write Newman assertions/checks. This is just the groundwork for those tests.
+expected errors. But I do not know Newman enough yet to write Newman assertions/checks. This is just the groundwork for those tests.
 
 ## Cleanup
 
 To cleanup all docker images, containers, etc:
 
-- `make down`
-- `make delete_db`
-- `docker image rm user_api_flask`
+- `make clean`
