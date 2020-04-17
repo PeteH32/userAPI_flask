@@ -10,3 +10,7 @@ __pycache__
 
 # Postman Newman test reports
 tests/postman_collections/newman-report.json
+
+# Mac OSX
+.DS_Store
+
